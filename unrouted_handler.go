@@ -473,10 +473,7 @@ func (handler *UnroutedHandler) PatchFile(w http.ResponseWriter, r *http.Request
 			handler.sendError(w, r, ErrNotImplemented)
 			return
 		}
-		if !info.SizeIsDeferred {
-			handler.sendError(w, r, ErrInvalidUploadLength)
-			return
-		}
+
 		uploadLength, err := strconv.ParseInt(r.Header.Get("Upload-Length"), 10, 64)
 		if err != nil || uploadLength < 0 || uploadLength < info.Offset || (handler.config.MaxSize > 0 && uploadLength > handler.config.MaxSize) {
 			handler.sendError(w, r, ErrInvalidUploadLength)
